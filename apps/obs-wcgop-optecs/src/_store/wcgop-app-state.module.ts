@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex, { Module, ActionTree, MutationTree, GetterTree } from 'vuex';
 import { WcgopAppState, RootState } from '@/_store/types/types';
-import { WcgopTrip, WcgopOperation, BoatnetUser } from '@boatnet/bn-models';
+import { WcgopTrip, WcgopOperation, BoatnetUser, CouchID } from '@boatnet/bn-models';
 import { pouchService } from '@boatnet/bn-pouch';
 
 Vue.use(Vuex);
@@ -10,7 +10,8 @@ export const state: WcgopAppState = {
   currentTrip: undefined,
   currentHaul: undefined,
   isKeyboardEnabled: true,
-  isSoundEnabled: true
+  isSoundEnabled: true,
+  currentFakeHaulId: ''
 };
 
 const actions: ActionTree<WcgopAppState, RootState> = {
@@ -31,7 +32,10 @@ const actions: ActionTree<WcgopAppState, RootState> = {
   },
   setSoundEnabled({ commit }: any, isEnabled: boolean) {
     commit('setSoundEnabled', isEnabled);
-  }
+  },
+  setFakeId({ commit }: any, fakeId: CouchID) {
+    commit('setFakeId', fakeId);
+  },
 };
 
 const mutations: MutationTree<WcgopAppState> = {
@@ -59,7 +63,12 @@ const mutations: MutationTree<WcgopAppState> = {
   },
   setSoundEnabled(newState: any, isEnabled: boolean) {
     newState.isSoundEnabled = isEnabled;
+  },
+  setFakeId(newState: any, fakeId: CouchID) {
+    newState.currentFakeHaulId = fakeId;
   }
+
+
 };
 
 const getters: GetterTree<WcgopAppState, RootState> = {
@@ -71,6 +80,9 @@ const getters: GetterTree<WcgopAppState, RootState> = {
   },
   isSoundEnabled(getState: WcgopAppState) {
     return getState.isSoundEnabled;
+  },
+  currentFakeHaulID(getState: WcgopAppState) {
+    return getState.currentFakeHaulId;
   }
 };
 

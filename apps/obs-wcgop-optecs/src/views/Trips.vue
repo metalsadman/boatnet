@@ -36,6 +36,9 @@
           </boatnet-table>
         </template>
       </boatnet-summary>
+      <div>Fake Hauls {{fakeHauls}}</div>
+      <q-btn @click="handleChangeFakeHaulId">CHANGE MY HAUL ID</q-btn>
+      <q-btn @click="handleShowAllHauls">SHOW ALL HAULZ</q-btn>
     </q-page>
   </span>
 </template>
@@ -59,7 +62,8 @@ import {
   WcgopOperationTypeName,
   LocationEvent,
   Vessel,
-  VesselTypeName
+  VesselTypeName,
+  CouchID
 } from '@boatnet/bn-models';
 import moment from 'moment';
 
@@ -75,6 +79,12 @@ Vue.component(BoatnetSummary);
         sort: [{ tripNum: 'desc' }]
         // limit: 5 // this.resultsPerPage,
       };
+    },
+    fakeHauls() {
+      return {
+        database: pouchService.userDBName,
+        selector: { type: 'fake-haul', _id: this.currentFakeHaulID } // if blank, return all
+      };
     }
   }
 })
@@ -89,6 +99,9 @@ export default class Trips extends Vue {
   private setCurrentTrip: any;
   @Getter('currentTrip', { namespace: 'appState' })
   private currentTrip!: WcgopTrip;
+  @Getter('currentFakeHaulID', { namespace: 'appState' })
+  private currentFakeHaulID!: CouchID;
+  @Action('setFakeId', { namespace: 'appState' }) private setFakeId: any;
   @Action('addTest', { namespace: 'pouchState' })
   private addTest: any;
 
@@ -97,6 +110,7 @@ export default class Trips extends Vue {
   private myStuff: any = {};
   private myPouchDB: any;
   private tempEmptyData: any[] = [];
+  private fakeHauls!: any;
 
   private userTrips!: any;
   constructor() {
@@ -165,6 +179,14 @@ export default class Trips extends Vue {
 
   private handleGoToHauls() {
     this.$router.push({ path: '/hauls/' });
+  }
+
+  private handleChangeFakeHaulId() {
+    this.setFakeId('0283d1fb26c0bd7b0bae00166502e781');
+  }
+
+  private handleShowAllHauls() {
+    this.setFakeId('');
   }
 
   private handleSelectTrip(trip: any) {

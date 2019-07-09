@@ -135,7 +135,8 @@
               <q-item-section>
                 <!-- <div> -->
                   <div class="text-subtitle2 left-pad"> Affirmed Departure Date</div>
-                  <q-date v-model="activeTrip.captainAffirmedDepartureDate" color="green" dark></q-date>
+                  <!-- <q-date v-model="activeTrip.captainAffirmedDepartureDate" color="green" dark></q-date> -->
+                  <q-input v-model="activeTrip.captainAffirmedDepartureDate" filled mask="date"/>
                 <!-- </div> -->
               </q-item-section>
             </q-item>
@@ -144,7 +145,8 @@
               <q-item-section>
                 <!-- <div> -->
                   <div class="text-subtitle2 left-pad"> Affirmed Return Date</div>
-                  <q-date v-model="activeTrip.captainAffirmedReturnDate" color="red" dark></q-date>
+                  <!-- <q-date v-model="activeTrip.captainAffirmedReturnDate" color="red" dark></q-date> -->
+                  <q-input v-model="activeTrip.captainAffirmedReturnDate" filled  />
                 <!-- </div> -->
               </q-item-section>
             </q-item>
@@ -549,17 +551,29 @@ export default{
 </script>
 -->
 
-<style lang="stylus" scoped>
-  .my-card
-    width 100%
-    max-width 450px
+<style scoped>
+  .my-card {
+    width: 100%;
+    max-width: 450px;
+  }
 
-  .left-pad
-    padding-left: 10px
+  .left-pad {
+    padding-left: 10px;
+  }
 
-  .q-date--portrait-standard
-    width: auto !important
-    margin: 10px
+  /* .q-date--portrait-standard {
+    width: 100% !important;
+    justify-content: center;
+  }
+
+ .q-dialog__inner {
+    padding: 0 !important;
+  }
+
+  .q-date__calendar {
+    min-width: 0 !important;
+    padding: 0 !important;
+  } */
 
 </style>
 
